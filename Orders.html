@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Order</title>
+  <style>
+    .order-details {
+      padding: 20px;
+      text-align: center;
+      font-size: 18px;
+    }
+    .order-details h2 {
+      font-size: 24px;
+    }
+    .order-summary {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #f0f0f0;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .order-summary p {
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="order-details">
+    <h2>Your Order Summary</h2>
+
+    <div class="order-summary">
+      <p><strong>Model:</strong> <span id="carModel"></span></p>
+      <p><strong>Color:</strong> <span id="carColor"></span></p>
+      <p><strong>Variant:</strong> <span id="carVariant"></span></p>
+    </div>
+
+    <button onclick="window.location.href='index.html'">Go Back to Home</button>
+  </div>
+
+  <script>
+    const bookedCar = JSON.parse(localStorage.getItem('bookedCar'));
+
+    if (bookedCar) {
+      document.getElementById('carModel').textContent = bookedCar.model;
+      document.getElementById('carColor').textContent = bookedCar.color;
+      document.getElementById('carVariant').textContent = bookedCar.variant;
+    } else {
+      document.querySelector('.order-details').innerHTML = '<h2>No order found!</h2>';
+    }
+  </script>
+
+</body>
+</html>
