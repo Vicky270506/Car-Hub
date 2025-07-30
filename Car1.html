@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Configuration</title>
+  <link rel="icon" href="F:\DBMS Tutorial\Project\Pics\apex-legends-logo-41868.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Rationale&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color:oldlace; 
+    }
+    #myHeader {
+      font-family: "Black Ops One", system-ui;
+      font-weight: 400;
+      font-style: normal;
+      color: white;
+      text-shadow: 2px 2px 4px #000000;
+      padding: 15px;
+    }
+
+    #mydesc {
+      font-family: "Rationale", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      font-size: medium;
+      color: white;
+      padding-left: 15px;
+      text-shadow: 1px 1px 3px #000000;
+    }
+    .car-details {
+      background-color: rgba(0, 0, 0, 0.7); 
+      display: flex;
+      justify-content: center;
+      align-items: left;
+      flex-direction:column;
+      height: 100vh;
+      background-size: cover; 
+      background-position: center; 
+    }
+    .config-options {
+      background-color: #000000;
+      height: auto;
+      margin: 15px auto; 
+      padding: 20px;
+      width: 70%;
+      align-items: center;
+      border-radius: 30px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+    .config-heading {
+      font-size: 24px;
+      font-family: 'Black Ops One', system-ui;
+      color: #4CAF50;
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    .config-options img {
+      width: 50%;
+      border-radius: 30px;
+      border: 3px solid #ccc;
+    }
+    #Ele {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 5px;
+      background-color: rgb(0, 0, 0);
+    }
+    #Ele label {
+      font-weight: bold;
+      color: #4CAF50;
+      background-color: rgb(0, 0, 0);
+    }
+    #Ele select {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    #color {
+      color:forestgreen
+    }
+    #variant {
+      color:forestgreen;
+    }
+    .book-button {
+      margin: 20px auto;
+      display: block;
+      padding: 15px 40px;
+      background: linear-gradient(45deg, #4CAF50, #45a049);
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+    .book-button:hover {
+      background: linear-gradient(45deg, #45a049, #4CAF50);
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <header class="car-details" id="headerSection">
+    <div class="h-txt">
+      <h1 id="myHeader">Default Model</h1>
+      <p id="mydesc">Default description goes here.</p>
+    </div>
+  </header>
+  <div>
+  <div class="config-options">
+    <h2 class="config-heading">Configure Your Car</h2>
+    <img id="carImage" src="" alt="Car Image">
+    <div id="Ele">
+      <div>
+        <label for="color">Choose Color:</label><br>
+        <select id="color" onchange="updateCarImage()">
+          <option value="Rosso Supercar">Rosso Supercar</option>
+          <option value="Gray Metallica">Gray Metallica</option>
+          <option value="Blu Elettrico">Blu Elettrico</option>
+          <option value="Snowy white">Snowy white</option>
+        </select>
+      </div>
+      <div>
+        <label for="variant">Choose Variant:</label><br>
+        <select id="variant">
+          <option value="Basic">Basic</option>
+          <option value="Premium">Premium</option>
+          <option value="Luxury">Luxury</option>
+        </select>
+      </div>
+    </div>
+  </div>
+    <button class="book-button" onclick="bookCar()">Book Now</button>
+  </div>
+
+  <script>
+    // Predefined data for models
+    const modelData = {
+      "Apex Vortex": {
+        headerBackground: "https://wired.me/wp-content/uploads/2023/06/Aston-Martin-DB4-GT-Zagato.png",
+        description: "The Apex Vortex offers exceptional performance with a mid-rear engine and a retractable hardtop.",
+        options: {
+          colors: ["Rosso Supercar", "Gray Metallica", "Blu Elettrico", "Snowy white"],
+          images: {
+            "Rosso Supercar": "https://carconfigurator.ferrari.com/f250/ed189c1967ceb105ef58743004d4fcc8cffb573bce0a53e28961428c3d90bff7-Blackroom-Day-turntable-6.jpg",
+            "Gray Metallica": "https://carconfigurator.ferrari.com/f250/9b9036417ea160898f8798fd32ca42f716092779666f60963e1e4ede6b2f2249-Blackroom-Day-turntable-34.jpg",
+            "Blu Elettrico": "https://carconfigurator.ferrari.com/f250/c2d7797432028bab60b16671377e0df7ccef25ecff8713deabebbff861a893ee-Blackroom-Day-turntable-34.jpg",
+            "Snowy white": "https://carconfigurator.ferrari.com/f250/4def2b196d43d9254734541aea04a56eab97b44280483e16fa670730e37e05f3-Blackroom-Day-turntable-6.jpg"
+          }
+        },
+    prices: {
+      Basic: 250000,
+      Premium: 300000,
+      Luxury: 400000
+    }
+  },
+  "Sedan": {
+    headerBackground: "https://www.bmw.in/content/dam/bmw/common/all-models/x-series/x5/2023/highlights/bmw-x-series-x5-sp-desktop.jpg/jcr:content/renditions/cq5dam.resized.img.1680.large.time1673960417242.jpg",
+    description: "The Sedan combines efficiency with comfort, making it an ideal choice for eco-conscious drivers.",
+    options: {
+      colors: ["Crystal White", "Midnight Black", "Sky Blue"],
+      images: {
+        "Crystal White": "https://stimg.cardekho.com/images/car-images/930x620/BMW/2-Series/11755/BMW-2-Series-220i-M-Sport-Shadow-Edition/1721299468499/226_Alpine-White_c7c7c7.jpg?tr=w-898",
+        "Midnight Black": "https://stimg.cardekho.com/images/car-images/930x620/BMW/2-Series/11755/BMW-2-Series-220i-M-Sport-Shadow-Edition/1721299468499/225_Black-Sapphire-Metallic_131313.jpg?tr=w-898",
+        "Sky Blue": "https://stimg.cardekho.com/images/car-images/930x620/BMW/2-Series/10578/1689768549791/221_Snapper-Rocks-Blue-Metallic_2c6a86.jpg?tr=w-898"
+      }
+    },
+    prices: {
+      Basic: 220000,
+      Premium: 250000,
+      Luxury: 280000
+    }
+  },
+  "Futura": {
+    headerBackground: "https://cdn.ferrari.com/cms/network/media/img/resize/5d6e87bbee5f7e5863059b0b-d-f8spider-dynamic?width=1920&height=1080",
+    description: "The Futura delivers cutting-edge electric vehicle technology for a futuristic driving experience.",
+    options: {
+      colors: ["Electric Red", "Galaxy Silver", "Yellow Spider"],
+      images: {
+        "Electric Red": "https://cdn.ferrari.com/cms/network/media/img/resize/5eafc6888587640f497e3ad2-63_ferrari-fxx_pacchettoevoluzione_488_spider_esterni?width=750&height=550",
+        "Galaxy Silver": "https://cdn.shopify.com/s/files/1/0035/9877/8435/files/Grigio_Ferro_Ferrari_LaFerrari_2048x2048.jpg?v=1605105116",
+        "Yellow Spider": "https://ferrari-cdn.thron.com/delivery/public/thumbnail/ferrari/6efe4f26-f565-4f6d-8c2e-c6bd9c9aac31/bocxuw/std/488x325/6efe4f26-f565-4f6d-8c2e-c6bd9c9aac31?scalemode=auto"
+      }
+    },
+    prices: {
+      Basic: 300000,
+      Premium: 350000,
+      Luxury: 400000
+    }
+  },
+  "Lexurious SUV": {
+    headerBackground: "https://www.mercedes-benz.co.in/content/india/en/passengercars/models/suv/maybach-x167-fl-24-1/overview/_jcr_content/root/responsivegrid/simple_stage.component.damq5.3409151176818.jpg/mercedes-maybach-gls-suv-x167-stage-3840x3840-08-2023.jpg",
+    description: "The Lexurious SUV combines luxury with off-road capability, delivering a premium driving experience.",
+    options: {
+      colors: ["Coral Blue", "Milky Way Silver", "Obsidian Black"],
+      images: {
+        "Coral Blue": "https://www.mercedes-benz.co.in/content/india/en/passengercars/models/suv/x243-fl-24-2/overview/_jcr_content/root/responsivegrid/highlight_copy/slider/image_363380175.component.damq5.3441038211285.jpg/Digital_240705_MB-P57665_P.EQ.EQA.H243.EQB.X243.L_India-DI-Changes_EQB_Spectral-blue_V1R0.jpg",
+        "Milky Way Silver": "https://www.mercedes-benz.co.in/content/india/en/passengercars/models/suv/h243-fl-24-2/overview/_jcr_content/root/responsivegrid/highlight/slider/image_copy_1594368438.component.damq5.3440989359081.jpg/EQA-Electric_EQA-Electric-Art-Line-Grey.jpg",
+        "Obsidian Black": "https://www.mercedes-benz.co.in/content/india/en/passengercars/models/suv/eqe/overview/_jcr_content/root/responsivegrid/tabs/tabitem_1529823442/highlight/slider/image_1018763131_cop_2056947024.component.damq5.3389323748831.jpg/Selenite_Grey-Metallic.jpg"
+      }
+    },
+    prices: {
+      Basic: 400000,
+      Premium: 450000,
+      Luxury: 500000
+    }
+  },
+  "Apex Speedra": {
+    headerBackground: "https://beachgypsyclassics.com/wp-content/uploads/2023/05/1957-porsche-speedster-convertible-vehicle-featured-image-3x2-TNK-Photo-2574.jpg",
+    description: "The Apex Speedra is a convertible built for thrill seekers who crave speed and style.",
+    options: {
+      colors: ["Cartagena Yellow Metallic", "Jet Black", "Deep Ocean Blue","Shade Green Metallic"],
+      images: {
+        "Cartagena Yellow Metallic": "https://imgd.aeplcdn.com/370x208/n/5iksceb_1758433.jpg?q=80",
+        "Jet Black": "https://imgd.aeplcdn.com/370x208/n/xsoupsa_1476828.jpg?q=80",
+        "Deep Ocean Blue": "https://imgd.aeplcdn.com/370x208/n/d8rupsa_1476832.jpg?q=80",
+        "Shade Green Metallic":"https://imgd.aeplcdn.com/370x208/n/26nsceb_1758437.jpg?q=80"
+      }
+    },
+    prices: {
+      Basic: 500000,
+      Premium: 550000,
+      Luxury: 600000
+    }
+  },
+  "Apex Sports": {
+    headerBackground: "https://images.hindustantimes.com/auto/auto-images/Lamborghini/revuelto/exterior_lamborghini-revuelto_front-view_600x400.jpg",
+    description: "The Apex Sports is a compact sports car designed for dynamic performance and agile handling.",
+    options: {
+      colors: ["Lava Red", "Frost White", "Neon Green", "Shadow Gray"],
+      images: {
+        "Lava Red": "https://imgd.aeplcdn.com/600x337/n/wfnedcb_1704767.jpg?q=80",
+        "Frost White": "https://imgd.aeplcdn.com/600x337/n/iptddcb_1704745.jpg?q=80",
+        "Neon Green": "https://imgd.aeplcdn.com/600x337/n/zf5edcb_1704773.jpg?q=80",
+        "Shadow Gray": "https://imgd.aeplcdn.com/600x337/n/73fedcb_1704757.jpg?q=80"
+      }
+    },
+    prices: {
+      Basic: 350000,
+      Premium: 400000,
+      Luxury: 450000
+    }
+  }
+};
+
+console.log(modelData);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const model = params.get("model");
+      const modelImage = params.get("img");
+
+      if (model && modelData[model]) {
+        // Load data for the model
+        const modelInfo = modelData[model];
+
+        // Set header background and description
+        document.getElementById("headerSection").style.backgroundImage = `url('${modelInfo.headerBackground}')`;
+        document.getElementById("myHeader").textContent = model;
+        document.getElementById("mydesc").textContent = modelInfo.description;
+        document.getElementById("carImage").src = modelImage;
+
+        // Populate configuration options
+        const colorSelect = document.getElementById("color");
+        colorSelect.innerHTML = modelInfo.options.colors.map(color => `<option value="${color}">${color}</option>`).join("");
+
+        // Change image dynamically on color selection
+        colorSelect.addEventListener("change", () => {
+          const selectedColor = colorSelect.value;
+          document.getElementById("carImage").src = modelInfo.options.images[selectedColor];
+        });
+      } else {
+        alert("Model data not found!");
+      }
+    });
+    function bookCar() {
+  const model = document.getElementById("myHeader").textContent;
+  const color = document.getElementById("color").value;
+  const variant = document.getElementById("variant").value;
+
+  if (!model || !color || !variant) {
+    alert("Please select valid options before proceeding.");
+    return;
+  }
+
+  const price = modelData[model]?.prices[variant] || 0;
+
+  window.location.href = `BookingPage.html?model=${encodeURIComponent(model)}&color=${encodeURIComponent(color)}&variant=${encodeURIComponent(variant)}&price=${encodeURIComponent(price)}`;
+}  
+
+  </script>
+</body>
+</html>
