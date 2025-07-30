@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking</title>
+  <style>
+    .booking-details {
+      padding: 20px;
+      text-align: center;
+    }
+    .booking-details h2 {
+      font-size: 24px;
+    }
+    .confirm-button {
+      padding: 15px 30px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+    }
+    .confirm-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="booking-details">
+    <h2>Confirm Your Booking</h2>
+
+    <p>You have selected:</p>
+    <p>Color: <span id="selectedColor"></span></p>
+    <p>Variant: <span id="selectedVariant"></span></p>
+
+    <button class="confirm-button">Confirm Booking</button>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const model = params.get("model");
+    const color = params.get("color");
+    const variant = params.get("variant");
+    const price = params.get("price");
+
+    document.getElementById('selectedColor').textContent = color;
+    document.getElementById('selectedVariant').textContent = variant;
+
+    document.querySelector('.confirm-button').onclick = function() {
+        window.location.href = "page23.html";
+        alert("Your booking has been confirmed!");
+      
+    };
+  </script>
+
+</body>
+</html>
