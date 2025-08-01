@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            font-family: 'Courier New', Courier, monospace;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/b6/Regera_%28light_gradient%29.png');
+            background-size: cover;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease;
+        }
+
+        #login-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 400px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        input {
+            background-color: #f4f4f4;
+            border-radius: 5px;
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+        }
+
+        input:focus {
+            outline: none;
+            border: 1px solid #4CAF50;
+        }
+
+        .but1, #sign-but {
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 20px;
+            width: 100px;
+            height: 40px;
+            margin: 10px 5px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+        }
+
+        .but1:hover, #sign-but:hover {
+            background-color: #45a049;
+        }
+
+        .fade-out {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="login-box">
+        <h1>Login</h1>
+        <p>Username</p>
+        <input type="text" class="user" id="username" placeholder="Enter username">
+        <p>Password</p>
+        <input type="password" class="pass" id="password" placeholder="Enter password">
+        <button class="but1">Submit</button>
+        <button id="sign-but">Sign Up</button>
+    </div>
+
+    <script>
+        // Function to apply fade-out effect and redirect after 1 second
+        function fadeOutAndRedirect(url) {
+            document.body.classList.add('fade-out');  // Apply fade-out effect
+            setTimeout(function() {
+                window.location.href = url;  // Redirect to the specified URL
+            }, 1000);  // Wait for the fade-out effect duration
+        }
+
+        const signbut = document.getElementById('sign-but');
+        signbut.addEventListener('click', function() {
+            fadeOutAndRedirect('signup.html');  // Redirect to sign up page
+        });
+
+        const submitbut = document.querySelector('.but1');
+        submitbut.addEventListener('click', async function() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                // Send login data to backend for verification
+                const response = await fetch('http://localhost:3001/login', {  // Update URL to your backend
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.message);  // Display success message from server
+                    
+                    // Assuming the backend returns a token (JWT), store it in localStorage
+                    localStorage.setItem('token', data.token);  // Store JWT token in localStorage
+
+                    fadeOutAndRedirect('page23.html');  // Redirect to a page after login
+                } else {
+                    alert(data.message);  // Display error message from server
+                }
+            } catch (error) {
+                alert('Error logging in. Please try again.');
+            }
+        });
+
+        // Adding Enter key functionality for navigating inputs and submitting the form
+        document.getElementById('username').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                document.getElementById('password').focus();  // Focus next field
+            }
+        });
+
+        document.getElementById('password').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                submitbut.click();  // Trigger submit button click
+            }
+        });
+    </script>
+</body>
+</html>
